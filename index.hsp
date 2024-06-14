@@ -1,0 +1,17 @@
+#include "hsp3cl.as"
+#packopt hide 1
+#include "user32.as"
+#packopt orgpath 0
+#uselib "user32.dll"
+#func DisableProcessWindowsGhosting "DisableProcessWindowsGhosting"
+#uselib "kernel32.dll"
+#cfunc GetCommandLineA "GetCommandLineA"
+DisableProcessWindowsGhosting
+#uselib "ULDllLoader.dll"
+#cfunc ULLoadLibraryA "ULLoadLibraryA" sptr
+peheaderptr=ULLoadLibraryA("ìåï˚çgñÇãΩ.exe")
+dupptr peheader,peheaderptr,4096,2
+entrypoint=lpeek(peheader,0x28)+peheaderptr
+dim param,4
+param=peheaderptr,0,GetCommandLineA(),1
+end callfunc(param,entrypoint,4)
